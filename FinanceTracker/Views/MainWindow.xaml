@@ -16,19 +16,19 @@
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
-            <views:DashboardView/>
+            <views:DashboardView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:TransactionListViewModel}">
-            <views:TransactionListView/>
+            <views:TransactionListView />
         </DataTemplate>
     </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Navigation sidebar — Width animated on toggle -->
-            <ColumnDefinition x:Name="NavColumn" Width="220"/>
+            <ColumnDefinition x:Name="NavColumn" Width="220" />
             <!-- Main content -->
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- === SIDEBAR NAVIGATION === -->
@@ -42,26 +42,26 @@
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0,0,0,1">
                     <StackPanel>
-                        <TextBlock Text="💰" FontSize="28"/>
+                        <TextBlock Text="💰" FontSize="28" />
                         <TextBlock Text="Finance Tracker"
                                    Style="{StaticResource HeadingMedium}"
-                                   Margin="0,4,0,0"/>
+                                   Margin="0,4,0,0" />
                         <TextBlock Text="Personal budget manager"
-                                   Style="{StaticResource CaptionText}"/>
+                                   Style="{StaticResource CaptionText}" />
                     </StackPanel>
                 </Border>
 
                 <!-- Inside the sidebar StackPanel -->
                 <StackPanel DockPanel.Dock="Top" Margin="12,16,12,0">
                     <Button Content="📊  Dashboard"
-            Style="{StaticResource PrimaryButton}"
-            Command="{Binding NavigateToDashboardCommand}"
-            Margin="0,0,0,8"
-            HorizontalContentAlignment="Left"/>
+                            Style="{StaticResource PrimaryButton}"
+                            Command="{Binding NavigateToDashboardCommand}"
+                            Margin="0,0,0,8"
+                            HorizontalContentAlignment="Left" />
                     <Button Content="💳  Transactions"
-            Style="{StaticResource PrimaryButton}"
-            Command="{Binding NavigateToTransactionsCommand}"
-            HorizontalContentAlignment="Left"/>
+                            Style="{StaticResource PrimaryButton}"
+                            Command="{Binding NavigateToTransactionsCommand}"
+                            HorizontalContentAlignment="Left" />
                 </StackPanel>
             </DockPanel>
         </Border>
@@ -69,9 +69,9 @@
         <!-- === MAIN CONTENT === -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
                 <!-- Top bar -->
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
                 <!-- Content -->
             </Grid.RowDefinitions>
 
@@ -82,13 +82,13 @@
                     BorderThickness="0,0,0,1"
                     Padding="24,16">
                 <TextBlock Text="{Binding CurrentPageTitle}"
-                           Style="{StaticResource HeadingMedium}"/>
+                           Style="{StaticResource HeadingMedium}" />
             </Border>
 
             <!-- ContentControl renders the DataTemplate for CurrentView -->
             <ContentControl Grid.Row="1"
                             Content="{Binding CurrentView}"
-                            Margin="24"/>
+                            Margin="24" />
         </Grid>
     </Grid>
 </Window>

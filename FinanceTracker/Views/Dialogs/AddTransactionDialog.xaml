@@ -16,78 +16,77 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Assets/Styles/Colors.xaml"/>
-                <ResourceDictionary Source="/Assets/Styles/Typography.xaml"/>
-                <ResourceDictionary Source="/Assets/Styles/Controls.xaml"/>
+                <ResourceDictionary Source="/Assets/Styles/Colors.xaml" />
+                <ResourceDictionary Source="/Assets/Styles/Typography.xaml" />
+                <ResourceDictionary Source="/Assets/Styles/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
         </ResourceDictionary>
     </Window.Resources>
 
     <Window.Background>
-        <SolidColorBrush Color="{StaticResource PrimaryColor}"/>
+        <SolidColorBrush Color="{StaticResource PrimaryColor}" />
     </Window.Background>
 
     <StackPanel Margin="24">
 
         <TextBlock Text="New Transaction"
                    Style="{StaticResource HeadingMedium}"
-                   Margin="0,0,0,24"/>
+                   Margin="0,0,0,24" />
 
         <TextBlock Text="Description"
                    Style="{StaticResource CaptionText}"
-                   Margin="0,0,0,4"/>
+                   Margin="0,0,0,4" />
         <TextBox Style="{StaticResource ModernTextBox}"
                  Text="{Binding Description,
                         UpdateSourceTrigger=PropertyChanged,
                         ValidatesOnNotifyDataErrors=True}"
-                 Margin="0,0,0,16"/>
+                 Margin="0,0,0,16" />
 
         <TextBlock Text="Amount"
                    Style="{StaticResource CaptionText}"
-                   Margin="0,0,0,4"/>
+                   Margin="0,0,0,4" />
         <TextBox Style="{StaticResource ModernTextBox}"
                  Text="{Binding Amount,
                         UpdateSourceTrigger=PropertyChanged,
                         ValidatesOnNotifyDataErrors=True}"
-                 Margin="0,0,0,16"/>
+                 Margin="0,0,0,16" />
 
         <TextBlock Text="Date"
                    Style="{StaticResource CaptionText}"
-                   Margin="0,0,0,4"/>
+                   Margin="0,0,0,4" />
         <DatePicker SelectedDate="{Binding Date}"
-                    Margin="0,0,0,16"/>
+                    Margin="0,0,0,16" />
 
         <TextBlock Text="Type"
                    Style="{StaticResource CaptionText}"
-                   Margin="0,0,0,4"/>
+                   Margin="0,0,0,4" />
         <ComboBox ItemsSource="{Binding TransactionTypes}"
                   SelectedItem="{Binding SelectedType}"
                   Foreground="Black"
-                  Margin="0,0,0,16"/>
+                  Margin="0,0,0,16" />
 
         <TextBlock Text="Category"
                    Style="{StaticResource CaptionText}"
-                   Margin="0,0,0,4"/>
+                   Margin="0,0,0,4" />
         <ComboBox ItemsSource="{Binding FilteredCategories}"
                   SelectedItem="{Binding SelectedCategory,
                                  ValidatesOnNotifyDataErrors=True}"
                   DisplayMemberPath="Name"
                   Foreground="Black"
-                  Margin="0,0,0,24"/>
+                  Margin="0,0,0,24" />
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="12"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0"
                     Content="Cancel"
                     Style="{StaticResource PrimaryButton}"
                     Background="#555555"
-                    Command="{Binding CancelCommand}"/>
+                    Command="{Binding CancelCommand}" />
 
             <Button Grid.Column="2"
                     Style="{StaticResource PrimaryButton}"
@@ -96,10 +95,10 @@
                     <TextBlock>
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
-                                <Setter Property="Text" Value="Save Transaction"/>
+                                <Setter Property="Text" Value="Save Transaction" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsSaving}" Value="True">
-                                        <Setter Property="Text" Value="Saving..."/>
+                                        <Setter Property="Text" Value="Saving..." />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

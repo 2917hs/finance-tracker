@@ -1,6 +1,5 @@
-﻿using FinanceTracker.ViewModels;
-using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
+using FinanceTracker.ViewModels;
 
 namespace FinanceTracker.Views;
 

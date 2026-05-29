@@ -15,9 +15,9 @@
          (which would try to resolve DI services and fail). -->
 
     <UserControl.Resources>
-        <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
-        <conv:TransactionTypeToBrushConverter x:Key="TypeToBrush"/>
-        <conv:DecimalToSignedStringConverter x:Key="SignedDecimal"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVis" />
+        <conv:TransactionTypeToBrushConverter x:Key="TypeToBrush" />
+        <conv:DecimalToSignedStringConverter x:Key="SignedDecimal" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -27,7 +27,7 @@
             <Border Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
                     Background="#22FFFFFF" CornerRadius="8" Padding="16" Margin="0,0,0,16">
                 <TextBlock Text="Loading..." Style="{StaticResource BodyText}"
-                           HorizontalAlignment="Center"/>
+                           HorizontalAlignment="Center" />
             </Border>
 
             <!-- === KPI CARDS === -->
@@ -37,12 +37,12 @@
                 <Border Margin="0,0,12,0" Background="{StaticResource SurfaceBrush}"
                         CornerRadius="12" Padding="20">
                     <StackPanel>
-                        <TextBlock Text="Total Balance" Style="{StaticResource CaptionText}"/>
+                        <TextBlock Text="Total Balance" Style="{StaticResource CaptionText}" />
                         <TextBlock Text="{Binding TotalBalance, StringFormat=C2}"
                                    Style="{StaticResource HeadingLarge}"
-                                   Margin="0,8,0,0"/>
+                                   Margin="0,8,0,0" />
                         <TextBlock Text="All time" Style="{StaticResource CaptionText}"
-                                   Margin="0,4,0,0"/>
+                                   Margin="0,4,0,0" />
                     </StackPanel>
                 </Border>
 
@@ -50,16 +50,17 @@
                 <Border Margin="6,0,6,0" Background="{StaticResource SurfaceBrush}"
                         CornerRadius="12" Padding="20">
                     <StackPanel>
-                        <TextBlock Text="Monthly Income" Style="{StaticResource CaptionText}"/>
+                        <TextBlock Text="Monthly Income" Style="{StaticResource CaptionText}" />
                         <TextBlock Text="{Binding MonthlyIncome, StringFormat=C2}"
                                    Style="{StaticResource HeadingLarge}"
                                    Foreground="{StaticResource SuccessBrush}"
-                                   Margin="0,8,0,0"/>
-                        <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now},
+                                   Margin="0,8,0,0" />
+                        <TextBlock
+                            Text="{Binding Source={x:Static sys:DateTime.Now},
                                          StringFormat='MMMM {0}',
                                          ConverterCulture=en-US}"
-                                   Style="{StaticResource CaptionText}"
-                                   Margin="0,4,0,0"/>
+                            Style="{StaticResource CaptionText}"
+                            Margin="0,4,0,0" />
                     </StackPanel>
                 </Border>
 
@@ -67,11 +68,11 @@
                 <Border Margin="12,0,0,0" Background="{StaticResource SurfaceBrush}"
                         CornerRadius="12" Padding="20">
                     <StackPanel>
-                        <TextBlock Text="Monthly Expenses" Style="{StaticResource CaptionText}"/>
+                        <TextBlock Text="Monthly Expenses" Style="{StaticResource CaptionText}" />
                         <TextBlock Text="{Binding MonthlyExpenses, StringFormat=C2}"
                                    Style="{StaticResource HeadingLarge}"
                                    Foreground="{StaticResource DangerBrush}"
-                                   Margin="0,8,0,0"/>
+                                   Margin="0,8,0,0" />
                     </StackPanel>
                 </Border>
             </UniformGrid>
@@ -79,8 +80,8 @@
             <!-- === CHART + RECENT TRANSACTIONS === -->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="340" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Expense Pie Chart -->
@@ -90,10 +91,10 @@
                     <StackPanel>
                         <TextBlock Text="Expenses by Category"
                                    Style="{StaticResource HeadingMedium}"
-                                   Margin="0,0,0,16"/>
+                                   Margin="0,0,0,16" />
                         <lvc:PieChart Series="{Binding ExpenseSeries}"
                                       Height="280"
-                                      LegendPosition="Right"/>
+                                      LegendPosition="Right" />
                     </StackPanel>
                 </Border>
 
@@ -105,7 +106,7 @@
                         <TextBlock DockPanel.Dock="Top"
                                    Text="Recent Transactions"
                                    Style="{StaticResource HeadingMedium}"
-                                   Margin="0,0,0,16"/>
+                                   Margin="0,0,0,16" />
 
                         <ItemsControl ItemsSource="{Binding RecentTransactions}">
                             <ItemsControl.ItemTemplate>
@@ -114,20 +115,20 @@
                                             BorderThickness="0,0,0,1">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Grid.Column="0">
                                                 <TextBlock Text="{Binding Description}"
-                                                           Style="{StaticResource BodyText}"/>
+                                                           Style="{StaticResource BodyText}" />
                                                 <TextBlock Text="{Binding Category.Name}"
-                                                           Style="{StaticResource CaptionText}"/>
+                                                           Style="{StaticResource CaptionText}" />
                                             </StackPanel>
                                             <TextBlock Grid.Column="1"
                                                        Text="{Binding Amount, Converter={StaticResource SignedDecimal}}"
                                                        Foreground="{Binding Type, Converter={StaticResource TypeToBrush}}"
                                                        FontWeight="SemiBold"
-                                                       VerticalAlignment="Center"/>
+                                                       VerticalAlignment="Center" />
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

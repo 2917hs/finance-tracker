@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace FinanceTracker.Models;
 
-namespace FinanceTracker.Models
+public class Category
 {
-    public class Category
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
-        public string ColorHex { get; set; } = "#607D8B";
+    public string ColorHex { get; set; } = "#607D8B";
 
-        public TransactionType AppliesTo { get; set; }
-    }
+    public TransactionType AppliesTo { get; set; }
 }

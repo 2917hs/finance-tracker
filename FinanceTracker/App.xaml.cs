@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using FinanceTracker.Data;
 using FinanceTracker.Services;
 using FinanceTracker.ViewModels;
@@ -19,8 +20,8 @@ public partial class App : Application
             .ConfigureServices(ConfigureServices)
             .Build();
 
-        System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level =
-            System.Diagnostics.SourceLevels.Warning;
+        PresentationTraceSources.DataBindingSource.Switch.Level =
+            SourceLevels.Warning;
 
         DispatcherUnhandledException += (_, e) =>
         {

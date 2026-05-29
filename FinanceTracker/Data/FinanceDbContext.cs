@@ -1,23 +1,23 @@
 ﻿using FinanceTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinanceTracker.Data
+namespace FinanceTracker.Data;
+
+public class FinanceDbContext(DbContextOptions<FinanceDbContext> options) : DbContext(options)
 {
-    public class FinanceDbContext(DbContextOptions<FinanceDbContext> options) : DbContext(options)
+    public DbSet<Transaction> Transactions => Set<Transaction>();
+
+    public DbSet<Category> Categories => Set<Category>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public DbSet<Transaction> Transactions => Set<Transaction>();
+        base.OnModelCreating(modelBuilder);
 
-        public DbSet<Category>  Categories => Set<Category>();
+        modelBuilder.Entity<Transaction>()
+            .Property(x => x.Amount)
+            .HasColumnType("Text");
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Transaction>()
-                .Property(x => x.Amount)
-                .HasColumnType("Text");
-
-            modelBuilder.Entity<Category>().HasData(
+        modelBuilder.Entity<Category>().HasData(
             new Category { Id = 1, Name = "Salary", ColorHex = "#4CAF50", AppliesTo = TransactionType.Income },
             new Category { Id = 2, Name = "Freelance", ColorHex = "#8BC34A", AppliesTo = TransactionType.Income },
             new Category { Id = 3, Name = "Food", ColorHex = "#FF5722", AppliesTo = TransactionType.Expense },
@@ -27,6 +27,5 @@ namespace FinanceTracker.Data
             new Category { Id = 7, Name = "Shopping", ColorHex = "#FF9800", AppliesTo = TransactionType.Expense },
             new Category { Id = 8, Name = "Other", ColorHex = "#607D8B", AppliesTo = TransactionType.Expense }
         );
-        }
     }
 }

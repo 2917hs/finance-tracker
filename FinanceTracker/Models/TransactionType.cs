@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace FinanceTracker.Models;
 
-namespace FinanceTracker.Models
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        Income,
-        Expense
-    }
+    Income,
+    Expense
 }
