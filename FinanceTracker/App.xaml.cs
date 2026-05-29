@@ -3,7 +3,6 @@ using System.Windows;
 using FinanceTracker.Data;
 using FinanceTracker.Services;
 using FinanceTracker.ViewModels;
-using FinanceTracker.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

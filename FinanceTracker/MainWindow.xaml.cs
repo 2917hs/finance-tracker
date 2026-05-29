@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using FinanceTracker.ViewModels;
 
-namespace FinanceTracker.Views;
+namespace FinanceTracker;
 
 public partial class MainWindow : Window
 {
