@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="FinanceTracker.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:FinanceTracker.ViewModels"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:conv="clr-namespace:FinanceTracker.Converters"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:DashboardViewModel, IsDesignTimeCreatable=False}">
+
+    <!-- d:DataContext gives the XAML designer type information for IntelliSense.
+         IsDesignTimeCreatable=False prevents the designer from calling the constructor
+         (which would try to resolve DI services and fail). -->
+
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+        <conv:TransactionTypeToBrushConverter x:Key="TypeToBrush"/>
+        <conv:DecimalToSignedStringConverter x:Key="SignedDecimal"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,0,0,24">
+
+            <!-- Loading indicator -->
+            <Border Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                    Background="#22FFFFFF" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                <TextBlock Text="Loading..." Style="{StaticResource BodyText}"
+                           HorizontalAlignment="Center"/>
+            </Border>
+
+            <!-- === KPI CARDS === -->
+            <UniformGrid Columns="3" Margin="0,0,0,24">
+
+                <!-- Balance Card -->
+                <Border Margin="0,0,12,0" Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="12" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Total Balance" Style="{StaticResource CaptionText}"/>
+                        <TextBlock Text="{Binding TotalBalance, StringFormat=C2}"
+                                   Style="{StaticResource HeadingLarge}"
+                                   Margin="0,8,0,0"/>
+                        <TextBlock Text="All time" Style="{StaticResource CaptionText}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Income Card -->
+                <Border Margin="6,0,6,0" Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="12" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Monthly Income" Style="{StaticResource CaptionText}"/>
+                        <TextBlock Text="{Binding MonthlyIncome, StringFormat=C2}"
+                                   Style="{StaticResource HeadingLarge}"
+                                   Foreground="{StaticResource SuccessBrush}"
+                                   Margin="0,8,0,0"/>
+                        <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now},
+                                         StringFormat='MMMM {0}',
+                                         ConverterCulture=en-US}"
+                                   Style="{StaticResource CaptionText}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Expenses Card -->
+                <Border Margin="12,0,0,0" Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="12" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Monthly Expenses" Style="{StaticResource CaptionText}"/>
+                        <TextBlock Text="{Binding MonthlyExpenses, StringFormat=C2}"
+                                   Style="{StaticResource HeadingLarge}"
+                                   Foreground="{StaticResource DangerBrush}"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- === CHART + RECENT TRANSACTIONS === -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="340"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Expense Pie Chart -->
+                <Border Grid.Column="0" Margin="0,0,12,0"
+                        Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="12" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Expenses by Category"
+                                   Style="{StaticResource HeadingMedium}"
+                                   Margin="0,0,0,16"/>
+                        <lvc:PieChart Series="{Binding ExpenseSeries}"
+                                      Height="280"
+                                      LegendPosition="Right"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Recent Transactions -->
+                <Border Grid.Column="1"
+                        Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="12" Padding="20">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top"
+                                   Text="Recent Transactions"
+                                   Style="{StaticResource HeadingMedium}"
+                                   Margin="0,0,0,16"/>
+
+                        <ItemsControl ItemsSource="{Binding RecentTransactions}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="0,8" BorderBrush="{StaticResource BorderBrush}"
+                                            BorderThickness="0,0,0,1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="{Binding Description}"
+                                                           Style="{StaticResource BodyText}"/>
+                                                <TextBlock Text="{Binding Category.Name}"
+                                                           Style="{StaticResource CaptionText}"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding Amount, Converter={StaticResource SignedDecimal}}"
+                                                       Foreground="{Binding Type, Converter={StaticResource TypeToBrush}}"
+                                                       FontWeight="SemiBold"
+                                                       VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

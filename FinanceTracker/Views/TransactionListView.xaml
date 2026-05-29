@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="FinanceTracker.Views.TransactionListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:FinanceTracker.ViewModels"
+             xmlns:conv="clr-namespace:FinanceTracker.Converters"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:TransactionListViewModel, IsDesignTimeCreatable=False}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assets/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/Assets/Styles/Typography.xaml"/>
+                <ResourceDictionary Source="/Assets/Styles/Controls.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+            <conv:TransactionTypeToBrushConverter x:Key="TypeToBrush"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar -->
+        <Grid Grid.Row="0" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Style="{StaticResource ModernTextBox}"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,0,12,0"/>
+
+            <Button Grid.Column="1"
+                    Content="+ Add Transaction"
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding AddTransactionCommand}"
+                    Margin="0,0,8,0"/>
+
+            <Button Grid.Column="2"
+                    Content="Refresh"
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding RefreshCommand}"/>
+        </Grid>
+
+        <!-- Summary Bar -->
+        <Border Grid.Row="1"
+                Background="{StaticResource SurfaceBrush}"
+                CornerRadius="8"
+                Padding="16,12"
+                Margin="0,0,0,16">
+            <UniformGrid Columns="3">
+                <StackPanel>
+                    <TextBlock Text="Income"
+                               Style="{StaticResource CaptionText}"/>
+                    <TextBlock Text="{Binding TotalIncome, StringFormat=C2}"
+                               Foreground="{StaticResource SuccessBrush}"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Expenses"
+                               Style="{StaticResource CaptionText}"/>
+                    <TextBlock Text="{Binding TotalExpenses, StringFormat=C2}"
+                               Foreground="{StaticResource DangerBrush}"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right">
+                    <TextBlock Text="Balance"
+                               Style="{StaticResource CaptionText}"/>
+                    <TextBlock Text="{Binding Balance, StringFormat=C2}"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                </StackPanel>
+            </UniformGrid>
+        </Border>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Transactions}"
+                  SelectedItem="{Binding SelectedTransaction}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserSortColumns="True"
+                  SelectionUnit="FullRow"
+                  SelectionMode="Single"
+                  EnableRowVirtualization="True"
+                  Background="{StaticResource SurfaceBrush}"
+                  RowBackground="{StaticResource SurfaceBrush}"
+                  AlternatingRowBackground="#282838"
+                  Foreground="{StaticResource TextPrimaryBrush}"
+                  BorderThickness="0"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="{StaticResource BorderBrush}"
+                  ColumnHeaderHeight="40"
+                  RowHeight="44">
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background"
+                            Value="{StaticResource SurfaceBrush}"/>
+                    <Setter Property="Foreground"
+                            Value="{StaticResource TextSecondaryBrush}"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Padding"    Value="12,0"/>
+                    <Setter Property="BorderBrush"
+                            Value="{StaticResource BorderBrush}"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#33FFFFFF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date"
+                                    Binding="{Binding Date, StringFormat=dd MMM yyyy}"
+                                    Width="120"/>
+                <DataGridTextColumn Header="Description"
+                                    Binding="{Binding Description}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Category"
+                                    Binding="{Binding Category.Name}"
+                                    Width="130"/>
+
+                <DataGridTemplateColumn Header="Type" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="4"
+                                    Padding="6,2"
+                                    Background="{Binding Type,
+                                                 Converter={StaticResource TypeToBrush}}"
+                                    HorizontalAlignment="Left"
+                                    Margin="8,0">
+                                <TextBlock Text="{Binding Type}"
+                                           Foreground="White"
+                                           FontSize="11"
+                                           FontWeight="SemiBold"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Amount"
+                                    Binding="{Binding Amount, StringFormat=C2}"
+                                    Width="110"/>
+
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="🗑"
+                                    Style="{StaticResource DangerButton}"
+                                    Padding="8,4"
+                                    Command="{Binding DataContext.DeleteTransactionCommand,
+                                              RelativeSource={RelativeSource FindAncestor,
+                                              AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>
