@@ -46,14 +46,11 @@ public partial class App : Application
         services.AddTransient<IDialogService, DialogService>();
         services.AddSingleton<ITransactionService, TransactionService>();
 
-        services.AddTransient<DashboardViewModel>();
-        services.AddTransient<TransactionListViewModel>();
+        services.AddSingleton<DashboardViewModel>();
+        services.AddSingleton<TransactionListViewModel>();
         services.AddTransient<AddTransactionViewModel>();
 
-        services.AddSingleton<MainViewModel>(sp => new MainViewModel(
-            sp.GetRequiredService<DashboardViewModel>(),
-            sp.GetRequiredService<TransactionListViewModel>()
-        ));
+        services.AddSingleton<MainViewModel>();
 
         services.AddSingleton<MainWindow>();
     }

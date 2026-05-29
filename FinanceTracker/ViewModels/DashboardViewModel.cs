@@ -19,7 +19,7 @@ public partial class DashboardViewModel : ObservableObject
 
     [ObservableProperty] private bool _isLoading;
 
-    [ObservableProperty] private decimal _monthlyExpense;
+    [ObservableProperty] private decimal _monthlyExpenses;
 
     [ObservableProperty] private decimal _monthlyIncome;
 
@@ -30,7 +30,7 @@ public partial class DashboardViewModel : ObservableObject
         _transactionService = transactionService;
     }
 
-    public ObservableCollection<Transaction> RecentTransaction { get; } = [];
+    public ObservableCollection<Transaction> RecentTransactions { get; } = [];
 
     public async Task LoadAsync()
     {
@@ -44,10 +44,10 @@ public partial class DashboardViewModel : ObservableObject
 
             TotalBalance = await _transactionService.GetBalanceAsync();
             MonthlyIncome = monthlyTransaction.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount);
-            MonthlyExpense = monthlyTransaction.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
+            MonthlyExpenses = monthlyTransaction.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
 
-            RecentTransaction.Clear();
-            foreach (var tx in allTransactions.Take(5)) RecentTransaction.Add(tx);
+            RecentTransactions.Clear();
+            foreach (var tx in allTransactions.Take(5)) RecentTransactions.Add(tx);
 
             BuildExpenseChart(allTransactions.Where(t => t.Type == TransactionType.Expense).ToList());
         }
