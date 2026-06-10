@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:FinanceTracker.ViewModels"
-        xmlns:views="clr-namespace:FinanceTracker.Views.UserControls"
+        xmlns:views="clr-namespace:FinanceTracker.Views"
         mc:Ignorable="d"
 
         Title="Finance Tracker"

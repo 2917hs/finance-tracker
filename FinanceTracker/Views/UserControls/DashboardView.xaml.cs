@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace FinanceTracker.Views;
+namespace FinanceTracker.Views.UserControls;
 
 /// <summary>
 ///     Interaction logic for DashboardView.xaml

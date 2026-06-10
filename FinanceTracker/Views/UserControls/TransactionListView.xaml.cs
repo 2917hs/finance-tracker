@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace FinanceTracker.Views;
+namespace FinanceTracker.Views.UserControls;
 
 public partial class TransactionListView : UserControl
 {
